@@ -1,0 +1,12 @@
+{
+  "presets": ["next/babel"],
+  "plugins": ["styled-components", "macros"],
+  "env": {
+    "development": {
+      "plugins": [["babel-plugin-styled-components"]]
+    },
+    "test": {
+      "plugins": [["babel-plugin-styled-components"]]
+    }
+  }
+}
