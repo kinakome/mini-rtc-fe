@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { SocketContext } from 'pages/_app';
-import {} from 'service/rtc/ice';
-import {
-  createConnection,
-  publishLocalVideo,
-  subscribeRemoteVideo,
-} from 'service/miniSkyway/miniSkyway';
 import {
   prepareCalleeConnection,
   prepareCallerConnection,
-} from 'service/miniSkyway/miniSkyway';
+  createConnection,
+  publishLocalVideo,
+  subscribeRemoteVideo,
+} from 'mini-skyway';
+
 export const VideoPanel = ({
   recipientId,
   isOffer,

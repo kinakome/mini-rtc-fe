@@ -4338,6 +4338,12 @@ mime-types@^2.1.12:
   dependencies:
     mime-db "1.47.0"
 
+"mini-skyway@https://github.com/kinakome/mini-rtc.git":
+  version "1.0.0"
+  resolved "https://github.com/kinakome/mini-rtc.git#dc3bd4db1a23c158283164325060ae3d2f560d6c"
+  dependencies:
+    socket.io-client "^4.7.4"
+
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
