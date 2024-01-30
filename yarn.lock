@@ -4340,7 +4340,7 @@ mime-types@^2.1.12:
 
 "mini-skyway@https://github.com/kinakome/mini-rtc.git":
   version "1.0.0"
-  resolved "https://github.com/kinakome/mini-rtc.git#dc3bd4db1a23c158283164325060ae3d2f560d6c"
+  resolved "https://github.com/kinakome/mini-rtc.git#e2291918b267e671a669802ba37c151c1e3702f9"
   dependencies:
     socket.io-client "^4.7.4"
 

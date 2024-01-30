@@ -1,4 +1,4 @@
-import { RootPage } from 'components/pages/RootPage';
+import RootPage from 'components/pages/RootPage';
 import { NextPage } from 'next';
 import React from 'react';
 

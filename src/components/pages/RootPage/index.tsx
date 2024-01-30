@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Socket } from 'socket.io-client';
 import {
   Button,
   Dialog,
@@ -10,11 +9,14 @@ import {
   TextField,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { SocketContext } from 'pages/_app';
-import { VideoPanel } from '../VideoPanel';
+// import { createConnection } from 'mini-skyway';
+import VideoPanel from '../VideoPanel';
+import { SkywayConnectionContext } from 'pages/_app';
+import { Socket } from 'socket.io-client';
 
 export const RootPage = () => {
-  const socket = useContext(SocketContext);
+  const skywayConnection = useContext(SkywayConnectionContext);
+  const socket = skywayConnection.socket;
 
   const [socketId, setSocketId] = useState('');
   const getId = () => {
@@ -44,7 +46,7 @@ export const RootPage = () => {
       </div>
 
       {callProps.recipientId ? (
-        <VideoPanel {...callProps} />
+        <VideoPanel {...callProps} skywayConnection={skywayConnection} />
       ) : (
         <div>
           <RequestCallPanel socket={socket} />
@@ -130,3 +132,5 @@ const ReciveCallModal = ({
     </Dialog>
   );
 };
+
+export default RootPage;
