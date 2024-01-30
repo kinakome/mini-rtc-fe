@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import {
   Button,
@@ -10,27 +10,47 @@ import {
   TextField,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { SocketContext } from 'pages/_app';
+import { VideoPanel } from '../VideoPanel';
 
-export const RootPage = ({ socket }: { socket: Socket }) => {
+export const RootPage = () => {
+  const socket = useContext(SocketContext);
+
   const [socketId, setSocketId] = useState('');
   const getId = () => {
     if (socket.id) setSocketId(socket.id);
   };
 
+  const [callProps, setCallProps] = useState<{
+    recipientId: string;
+    isOffer: boolean;
+  }>({ recipientId: '', isOffer: false });
+
   useEffect(() => {
     socket.on('reciveCallAcceptance', (recivedAnswerClientId: string) => {
-      console.log(recivedAnswerClientId);
+      setCallProps({ recipientId: recivedAnswerClientId, isOffer: true });
     });
   }, []);
-  return (
-    <div>
-      <div>{socketId ? socketId : 'ID取得中です'}</div>
-      <Button variant="contained" onClick={getId}>
-        ID取得
-      </Button>
 
-      <RequestCallPanel socket={socket} />
-      <ReciveCallModal socket={socket} />
+  return (
+    <div className="p-8 font-medium">
+      <div className="mb-16">
+        <div className="mb-2">
+          {socketId ? socketId : 'ID取得ボタンを押すと、自分のIDが表示されます'}
+        </div>
+        <Button variant="contained" onClick={getId}>
+          ID取得
+        </Button>
+      </div>
+
+      {callProps.recipientId ? (
+        <VideoPanel {...callProps} />
+      ) : (
+        <div>
+          <RequestCallPanel socket={socket} />
+          <ReciveCallModal socket={socket} setCallProps={setCallProps} />
+        </div>
+      )}
     </div>
   );
 };
@@ -47,12 +67,12 @@ const RequestCallPanel = ({ socket }: { socket: Socket }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>通話したいユーザーのIDを入力してください</div>
       <TextField
         id="outlined-basic"
-        label="Outlined"
+        label="通話したいユーザーのID"
         variant="outlined"
         {...register('answerClientId', { required: true })}
+        className="mb-2 w-full"
       />
       <Button variant="contained" type="submit">
         発信
@@ -61,7 +81,19 @@ const RequestCallPanel = ({ socket }: { socket: Socket }) => {
   );
 };
 
-const ReciveCallModal = ({ socket }: { socket: Socket }) => {
+// 通話リクエストを受け取った際に表示されるモーダル
+const ReciveCallModal = ({
+  socket,
+  setCallProps,
+}: {
+  socket: Socket;
+  setCallProps: React.Dispatch<
+    React.SetStateAction<{
+      recipientId: string;
+      isOffer: boolean;
+    }>
+  >;
+}) => {
   const [offerClientId, setOfferClientId] = useState('');
 
   useEffect(() => {
@@ -75,14 +107,14 @@ const ReciveCallModal = ({ socket }: { socket: Socket }) => {
       answerClientId: socket.id,
       offerClientId: offerClientId,
     });
-    setOfferClientId('');
+    setCallProps({ recipientId: offerClientId, isOffer: false });
   };
 
   return (
     <Dialog
       open={offerClientId !== ''}
       onClose={() => setOfferClientId('false')}>
-      <DialogTitle>{}通話リクエストが来ました</DialogTitle>
+      <DialogTitle>通話リクエストが来ました</DialogTitle>
       <DialogContent>
         <DialogContentText>
           ID「{offerClientId}」のユーザーから通話リクエストが来ました。
