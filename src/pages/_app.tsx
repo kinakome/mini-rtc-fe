@@ -1,10 +1,8 @@
 import { AppProps } from 'next/app';
 import React, { createContext } from 'react';
 import 'sanitize.css';
-import {
-  createConnection,
-  SkywayConnection,
-} from 'service/miniSkyway/miniSkyway';
+import { createConnection, SkywayConnection } from 'mini-skyway';
+
 import 'styles/globals.css';
 import dynamic from 'next/dynamic';
 
@@ -22,6 +20,4 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
     </SkywayConnectionContext.Provider>
   );
 };
-// export default MyApp;
-
 export default dynamic(async () => MyApp, { ssr: false });

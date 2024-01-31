@@ -1,18 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-// import {
-//   SkywayConnection,
-//   prepareCalleeConnection,
-//   prepareCallerConnection,
-//   publishLocalVideo,
-//   subscribeRemoteVideo,
-// } from 'mini-skyway';
 import {
   SkywayConnection,
   prepareCalleeConnection,
   prepareCallerConnection,
   publishLocalVideo,
   subscribeRemoteVideo,
-} from '../../../service/miniSkyway/miniSkyway';
+} from 'mini-skyway';
 
 export type VideoPanelProps = {
   recipientId: string;
@@ -38,18 +31,14 @@ export const VideoPanel = ({
       if (localVideoElement)
         await publishLocalVideo(skywayConnection, localVideoElement);
 
-      // step4 : 相手のカメラ映像を取得した際に、指定のエリアで再生できるように準備をする
-      if (remoteVideoElement)
-        subscribeRemoteVideo(skywayConnection, remoteVideoElement);
-
-      // step5 : 送信者・受信者それぞれの通信を開始する
+      // step4 : 送信者・受信者それぞれの通信を開始する
       if (isOffer) {
         await prepareCallerConnection(skywayConnection, recipientId);
       } else {
         await prepareCalleeConnection(skywayConnection, recipientId);
       }
 
-      // step4 : 相手のカメラ映像を取得した際に、指定のエリアで再生できるように準備をする
+      // step5 : 相手のカメラ映像を取得した際に、指定のエリアで再生できるように準備をする
       if (remoteVideoElement)
         subscribeRemoteVideo(skywayConnection, remoteVideoElement);
     })();

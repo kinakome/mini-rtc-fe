@@ -9,13 +9,13 @@ import {
   TextField,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
-// import { createConnection } from 'mini-skyway';
 import VideoPanel from '../VideoPanel';
 import { SkywayConnectionContext } from 'pages/_app';
 import { Socket } from 'socket.io-client';
 
 export const RootPage = () => {
   const skywayConnection = useContext(SkywayConnectionContext);
+  console.log(skywayConnection);
   const socket = skywayConnection.socket;
 
   const [socketId, setSocketId] = useState('');
