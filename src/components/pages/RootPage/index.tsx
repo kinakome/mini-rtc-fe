@@ -69,13 +69,15 @@ const RequestCallPanel = ({ socket }: { socket: Socket }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        id="outlined-basic"
-        label="通話したいユーザーのID"
-        variant="outlined"
-        {...register('answerClientId', { required: true })}
-        className="mb-2 w-full"
-      />
+      <div className="mb-2">
+        <TextField
+          id="outlined-basic"
+          label="通話したいユーザーのID"
+          variant="outlined"
+          {...register('answerClientId', { required: true })}
+          className="w-96"
+        />
+      </div>
       <Button variant="contained" type="submit">
         発信
       </Button>

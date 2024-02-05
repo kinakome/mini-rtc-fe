@@ -14,6 +14,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.6",
+    "latest": "^0.2.0",
     "layout-styled-components": "^0.1.13",
     "mini-skyway": "https://github.com/kinakome/mini-skyway.git",
     "next": "^12.0.4",
